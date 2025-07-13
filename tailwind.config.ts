@@ -19,19 +19,7 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // New immersive color palette
-        diamond: '#6ee7b7',
-        immersiveblue: '#1e3a8a',
-        realmglow: '#a5f3fc',
-        neonflare: '#e879f9',
-        
-        // Existing cosmic colors
-        'cosmic-space': '#0a0a23',
-        'cosmic-purple': '#9945ff',
-        'cosmic-cyan': '#00ffe5',
-        'cosmic-white': '#ffffff',
-        'cosmic-amber': '#fbbf24',
-        
+        // Core colors only - removed excess gradients
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -66,23 +54,12 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      backgroundImage: {
-        'cosmic-gradient': 'linear-gradient(135deg, #9945ff, #00ffe5)',
-        'cosmic-radial': 'radial-gradient(ellipse at center, #9945ff 0%, #0a0a23 70%)',
-        'immersive-gradient': 'linear-gradient(135deg, #6ee7b7, #1e3a8a, #a5f3fc, #e879f9)',
-      },
+      // Minimal animations only
       animation: {
-        fadeIn: 'fadeIn 1s ease-in-out',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
-        'bounce-slow': 'bounce 2s ease-in-out infinite',
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' }
-        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },

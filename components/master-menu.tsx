@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Menu, X, Home, Sparkles, Brain, Map, Database, 
   Wand2, Eye, Settings, User, ExternalLink, 
-  Music, Palette, Globe, Zap
+  Music, Palette, Globe, Zap, Upload, Package, 
+  Layers, Monitor, Cpu
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -58,17 +59,21 @@ export function MasterMenu() {
       items: [
         { name: "World Builder", href: "/world-builder", icon: Wand2, description: "3D world creation" },
         { name: "Realm Map", href: "/realm-map", icon: Map, description: "Connected worlds" },
-        { name: "Asset Library", href: "/asset-library", icon: Database, description: "3D models & resources" },
+        { name: "Asset Library", href: "/asset-library", icon: Database, description: "Ultra-quality assets" },
+        { name: "AI Quality Enhancer", href: "/tools/ai-enhancer", icon: Zap, description: "AI-powered enhancement" },
+        { name: "Free Asset Aggregator", href: "/tools/free-assets", icon: Package, description: "Premium free assets" },
+        { name: "4D Templates", href: "/tools/4d-templates", icon: Layers, description: "4D immersive experiences" },
+        { name: "Unreal Renderer", href: "/tools/unreal-renderer", icon: Monitor, description: "Ultra-quality rendering" },
         { name: "AR Overlay", href: "/#dream-machine", icon: Eye, description: "Spatial computing" },
       ]
     },
     {
       title: "AI Engines",
       items: [
-        { name: "Nemura (Visual)", href: "/#dream-machine", icon: Palette, description: "Visual content AI" },
-        { name: "Sonarium (Audio)", href: "/#dream-machine", icon: Music, description: "Audio landscape AI" },
-        { name: "Vision Processing", href: "/#dream-machine", icon: Eye, description: "Computer vision" },
-        { name: "Neural Core", href: "/#dream-machine", icon: Zap, description: "AI orchestration" },
+        { name: "Nemura (Visual)", href: "/tools/nemura", icon: Palette, description: "Visual content AI" },
+        { name: "Sonarium (Audio)", href: "/tools/sonarium", icon: Music, description: "Audio landscape AI" },
+        { name: "Vision Processing", href: "/tools/unreal-renderer", icon: Eye, description: "Ultra-quality rendering" },
+        { name: "Neural Core", href: "/tools/ai-enhancer", icon: Cpu, description: "AI enhancement engine" },
       ]
     },
     {

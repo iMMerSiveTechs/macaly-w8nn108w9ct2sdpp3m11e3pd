@@ -1,52 +1,17 @@
 "use client"
 
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { TrendingUp, Users, Target, Clock } from 'lucide-react'
+import { TrendingUp, Users, Clock } from 'lucide-react'
 
 export function FundingCounter() {
-  const [waitlistCount, setWaitlistCount] = useState(0)
-  const [fundingProgress, setFundingProgress] = useState(0)
-  const [currentRaised, setCurrentRaised] = useState(0)
+  const [waitlistCount] = useState(450)
+  const [currentRaised] = useState(50000)
   
   const FUNDING_GOAL = 500000 // $500K goal
   const TARGET_WAITLIST = 10000
 
-  useEffect(() => {
-    // Simulate real counters - replace with actual API calls
-    const baseWaitlist = 2547
-    const baseFunding = 127500
-    
-    // Animate counters on load
-    const waitlistTimer = setInterval(() => {
-      setWaitlistCount(prev => {
-        const target = baseWaitlist + Math.floor(Math.random() * 50)
-        return prev < target ? prev + 15 : target
-      })
-    }, 100)
-
-    const fundingTimer = setInterval(() => {
-      setCurrentRaised(prev => {
-        const target = baseFunding + Math.floor(Math.random() * 5000)
-        return prev < target ? prev + 2500 : target
-      })
-    }, 150)
-
-    // Cleanup timers
-    setTimeout(() => {
-      clearInterval(waitlistTimer)
-      clearInterval(fundingTimer)
-    }, 3000)
-
-    return () => {
-      clearInterval(waitlistTimer)
-      clearInterval(fundingTimer)
-    }
-  }, [])
-
-  useEffect(() => {
-    setFundingProgress((currentRaised / FUNDING_GOAL) * 100)
-  }, [currentRaised])
+  const fundingProgress = (currentRaised / FUNDING_GOAL) * 100
+  const waitlistProgress = (waitlistCount / TARGET_WAITLIST) * 100
 
   const formatNumber = (num: number) => {
     if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
@@ -55,16 +20,12 @@ export function FundingCounter() {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="glass-panel p-6 rounded-xl border border-cosmic-white/20 mb-8"
-    >
+    <div className="bg-gray-900/50 border border-gray-700 p-6 rounded-xl mb-8 backdrop-blur-sm">
       <div className="text-center mb-6">
-        <h3 className="text-xl font-bold text-cosmic-white mb-2">
+        <h3 className="text-xl font-bold text-white mb-2">
           🚀 Live Campaign Status
         </h3>
-        <p className="text-cosmic-white/70 text-sm">
+        <p className="text-gray-400 text-sm">
           Real-time tracking of our community growth and funding progress
         </p>
       </div>
@@ -73,34 +34,27 @@ export function FundingCounter() {
         {/* Waitlist Counter */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-cosmic-purple/20 rounded-lg flex items-center justify-center">
-              <Users className="h-5 w-5 text-cosmic-purple" />
+            <div className="w-10 h-10 bg-purple-600/20 rounded-lg flex items-center justify-center">
+              <Users className="h-5 w-5 text-purple-400" />
             </div>
             <div>
-              <h4 className="text-cosmic-white font-semibold">Waitlist</h4>
-              <p className="text-cosmic-white/60 text-sm">Founding Creators</p>
+              <h4 className="text-white font-semibold">Waitlist</h4>
+              <p className="text-gray-400 text-sm">Founding Creators</p>
             </div>
           </div>
           
           <div className="text-center">
-            <motion.div
-              key={waitlistCount}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="text-3xl font-black text-cosmic-purple mb-2"
-            >
+            <div className="text-3xl font-black text-purple-400 mb-2">
               {formatNumber(waitlistCount)}
-            </motion.div>
-            <div className="w-full bg-cosmic-space/50 rounded-full h-2">
-              <motion.div
-                className="bg-cosmic-purple h-full rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${(waitlistCount / TARGET_WAITLIST) * 100}%` }}
-                transition={{ duration: 1 }}
+            </div>
+            <div className="w-full bg-gray-800 rounded-full h-2">
+              <div
+                className="bg-purple-500 h-full rounded-full transition-all duration-1000"
+                style={{ width: `${waitlistProgress}%` }}
               />
             </div>
-            <p className="text-cosmic-white/60 text-xs mt-2">
-              {((waitlistCount / TARGET_WAITLIST) * 100).toFixed(1)}% to {formatNumber(TARGET_WAITLIST)} target
+            <p className="text-gray-400 text-xs mt-2">
+              {waitlistProgress.toFixed(1)}% to {formatNumber(TARGET_WAITLIST)} target
             </p>
           </div>
         </div>
@@ -112,29 +66,22 @@ export function FundingCounter() {
               <TrendingUp className="h-5 w-5 text-green-400" />
             </div>
             <div>
-              <h4 className="text-cosmic-white font-semibold">Funding</h4>
-              <p className="text-cosmic-white/60 text-sm">Total Raised</p>
+              <h4 className="text-white font-semibold">Funding</h4>
+              <p className="text-gray-400 text-sm">Total Raised</p>
             </div>
           </div>
           
           <div className="text-center">
-            <motion.div
-              key={currentRaised}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="text-3xl font-black text-green-400 mb-2"
-            >
+            <div className="text-3xl font-black text-green-400 mb-2">
               ${formatNumber(currentRaised)}
-            </motion.div>
-            <div className="w-full bg-cosmic-space/50 rounded-full h-2">
-              <motion.div
-                className="bg-gradient-to-r from-green-400 to-emerald-500 h-full rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${fundingProgress}%` }}
-                transition={{ duration: 1.5 }}
+            </div>
+            <div className="w-full bg-gray-800 rounded-full h-2">
+              <div
+                className="bg-gradient-to-r from-green-400 to-emerald-500 h-full rounded-full transition-all duration-1000"
+                style={{ width: `${fundingProgress}%` }}
               />
             </div>
-            <p className="text-cosmic-white/60 text-xs mt-2">
+            <p className="text-gray-400 text-xs mt-2">
               {fundingProgress.toFixed(1)}% of ${formatNumber(FUNDING_GOAL)} goal
             </p>
           </div>
@@ -142,18 +89,18 @@ export function FundingCounter() {
       </div>
 
       {/* Live indicators */}
-      <div className="flex items-center justify-center gap-6 mt-6 pt-6 border-t border-cosmic-white/10">
+      <div className="flex items-center justify-center gap-6 mt-6 pt-6 border-t border-gray-700">
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-          <span className="text-cosmic-white/70 text-sm">Live Updates</span>
+          <span className="text-gray-400 text-sm">Live Updates</span>
         </div>
         <div className="flex items-center gap-2">
-          <Clock className="h-4 w-4 text-cosmic-white/60" />
-          <span className="text-cosmic-white/60 text-sm">
+          <Clock className="h-4 w-4 text-gray-500" />
+          <span className="text-gray-500 text-sm">
             {new Date().toLocaleDateString()} Update
           </span>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
