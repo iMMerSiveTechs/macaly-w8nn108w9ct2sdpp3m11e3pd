@@ -1,186 +1,239 @@
 "use client"
 
-import ImmersiveToolLoader from '@/components/ImmersiveToolLoader';
-import VisionOSPortal from '@/components/VisionOSPortal';
-import StripePricingTiers from '@/components/StripePricingTiers';
-import ViralEngagement from '@/components/ViralEngagement';
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 export default function ToolsPage() {
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState('all')
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 100)
+    return () => clearTimeout(timer)
+  }, [])
+
+  const toolCategories = [
+    { id: 'all', label: 'All Tools', emoji: '🛠️' },
+    { id: 'ai', label: 'AI Powered', emoji: '🤖' },
+    { id: 'creation', label: 'Creation', emoji: '🎨' },
+    { id: 'enhancement', label: 'Enhancement', emoji: '✨' },
+    { id: 'monetization', label: 'Monetization', emoji: '💰' }
+  ]
+
+  const tools = [
+    {
+      title: "🤖 AI Copilot",
+      description: "Intelligent assistant for 3D world creation with AI-powered suggestions and automated workflows",
+      href: "/tools/ai-copilot",
+      category: "ai",
+      status: "Available",
+      color: "from-blue-600 to-cyan-600",
+      features: ["Smart Chat", "Auto Generation", "Workflow Automation"]
+    },
+    {
+      title: "🎨 AI Enhancer", 
+      description: "Enhance your creations with AI magic - improve textures, lighting, and overall quality",
+      href: "/tools/ai-enhancer",
+      category: "ai",
+      status: "Available",
+      color: "from-purple-600 to-pink-600",
+      features: ["Texture Enhancement", "Auto Lighting", "Quality Optimization"]
+    },
+    {
+      title: "🎭 4D Templates",
+      description: "Pre-built immersive templates for rapid world creation and prototyping",
+      href: "/tools/4d-templates", 
+      category: "creation",
+      status: "Available",
+      color: "from-green-600 to-emerald-600",
+      features: ["Ready Templates", "Customizable", "Instant Deploy"]
+    },
+    {
+      title: "🎮 Unreal Renderer",
+      description: "Ultra-realistic rendering engine for photorealistic immersive experiences",
+      href: "/tools/unreal-renderer",
+      category: "enhancement",
+      status: "Beta",
+      color: "from-red-600 to-orange-600",
+      features: ["Photorealistic", "Real-time", "High Performance"]
+    },
+    {
+      title: "📦 Free Assets",
+      description: "Access thousands of free 3D assets, textures, sounds, and animations",
+      href: "/tools/free-assets",
+      category: "creation",
+      status: "Available", 
+      color: "from-indigo-600 to-purple-600",
+      features: ["10K+ Assets", "Commercial Use", "Regular Updates"]
+    },
+    {
+      title: "∞ Nemura Engine",
+      description: "Infinite reality possibilities with quantum-inspired parallel universe generation",
+      href: "/nemura",
+      category: "ai",
+      status: "New",
+      color: "from-purple-600 to-pink-600",
+      features: ["Infinite Realities", "Consciousness Sync", "Quantum Processing"]
+    },
+    {
+      title: "🎵 Sonarium",
+      description: "Advanced audio intelligence platform for immersive 3D sound experiences",
+      href: "/sonarium",
+      category: "enhancement",
+      status: "New",
+      color: "from-cyan-600 to-blue-600",
+      features: ["3D Spatial Audio", "AI Composition", "Real-time Processing"]
+    },
+    {
+      title: "💰 Revenue Engine",
+      description: "Monetize your creations with multiple revenue streams and affiliate programs",
+      href: "/affiliate",
+      category: "monetization",
+      status: "Available",
+      color: "from-yellow-600 to-orange-600",
+      features: ["Multiple Streams", "Affiliate Program", "Analytics Dashboard"]
+    }
+  ]
+
+  const filteredTools = selectedCategory === 'all' 
+    ? tools 
+    : tools.filter(tool => tool.category === selectedCategory)
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-6 py-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              🛠️ Creator Tools & Platform
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Access AI-powered tools, immersive experiences, and creator features all in one place. 
-              Level up your content creation with integrated workflows.
-            </p>
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900/20 to-black text-white">
+      {/* Live Site Banner */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-amber-600 to-orange-600 text-white text-center py-2 px-4 text-sm font-medium shadow-lg">
+        <div className="flex items-center justify-center gap-2">
+          <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+          <span>🚧 LIVE SITE - Some features still in development | Alpha Testing Phase</span>
+          <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-12 space-y-16">
-        {/* Immersive Tools */}
-        <section className="bg-gray-900 rounded-xl p-8">
-          <ImmersiveToolLoader />
-        </section>
-
-        {/* VisionOS Portal */}
-        <section>
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">🥽 Immersive Experience</h2>
-            <p className="text-gray-600">Enter VisionOS and AR/VR environments directly from your browser</p>
-          </div>
-          <VisionOSPortal />
-        </section>
-
-        {/* Engagement & Gamification */}
-        <section>
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">🎮 Creator Progress</h2>
-            <p className="text-gray-600">Track your growth, earn achievements, and unlock new features</p>
-          </div>
-          <ViralEngagement />
-        </section>
-
-        {/* Quick Actions */}
-        <section>
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">⚡ Quick Actions</h2>
-            <p className="text-gray-600">Jump into creation mode or access advanced features</p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <a
-              href="/world-builder"
-              className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow text-center group"
-            >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🏗️</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">World Builder</h3>
-              <p className="text-gray-600 text-sm">Create immersive 3D worlds</p>
-            </a>
-            
-            <a
-              href="/asset-library"
-              className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow text-center group"
-            >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">📦</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Asset Library</h3>
-              <p className="text-gray-600 text-sm">Browse premium 3D assets</p>
-            </a>
-            
-            <a
-              href="/sonarium"
-              className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow text-center group"
-            >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🎧</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Sonarium</h3>
-              <p className="text-gray-600 text-sm">Spatial audio tools</p>
-            </a>
-            
-            <a
-              href="/nemura"
-              className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow text-center group"
-            >
-              <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">🎬</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Nemura</h3>
-              <p className="text-gray-600 text-sm">Immersive video creation</p>
-            </a>
-          </div>
-        </section>
-
-        {/* Pricing Section */}
-        <section>
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">💎 Upgrade Your Experience</h2>
-            <p className="text-gray-600">Unlock advanced features and premium tools</p>
-          </div>
-          <StripePricingTiers />
-        </section>
-
-        {/* Developer API Section */}
-        <section>
-          <div className="bg-gray-900 rounded-xl p-8 text-white">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold mb-4">🔧 Developer API</h2>
-              <p className="text-gray-300">Integrate Nemurium into your own applications</p>
+      {/* Navigation */}
+      <nav className="fixed top-10 w-full z-40 bg-gray-900/95 backdrop-blur-sm border-b border-gray-700">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Nemurium
+            </Link>
+            <div className="flex items-center gap-6">
+              <Link href="/" className="text-gray-300 hover:text-white transition-colors">← Back to Home</Link>
+              <Link href="/world-builder" className="text-gray-300 hover:text-white transition-colors">World Builder</Link>
             </div>
-            
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-2xl mb-2">📡</div>
-                <h3 className="font-semibold mb-2">REST API</h3>
-                <p className="text-gray-300 text-sm">Full CRUD operations for worlds and assets</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="text-2xl mb-2">🔌</div>
-                <h3 className="font-semibold mb-2">WebSocket</h3>
-                <p className="text-gray-300 text-sm">Real-time collaboration and updates</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="text-2xl mb-2">📚</div>
-                <h3 className="font-semibold mb-2">SDKs</h3>
-                <p className="text-gray-300 text-sm">JavaScript, Python, and Unity SDKs</p>
-              </div>
-            </div>
-            
-            <div className="text-center mt-8">
-              <a
-                href="/docs/api"
-                className="inline-flex items-center space-x-2 bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <div className="pt-32 pb-20 px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-7xl mx-auto"
+        >
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                Creator Tools Suite
+              </span>
+            </h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              Everything you need to build, enhance, and monetize immersive 3D experiences. 
+              From AI-powered creation tools to advanced rendering engines.
+            </p>
+          </div>
+
+          {/* Category Filter */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
+            {toolCategories.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-200 flex items-center gap-2 ${
+                  selectedCategory === category.id
+                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
+                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
+                }`}
               >
-                <span>📖</span>
-                <span>View API Documentation</span>
-              </a>
-            </div>
+                <span>{category.emoji}</span>
+                {category.label}
+              </button>
+            ))}
           </div>
-        </section>
 
-        {/* Community & Support */}
-        <section>
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">🤝 Community & Support</h2>
-            <p className="text-gray-600">Connect with other creators and get help when you need it</p>
+          {/* Tools Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredTools.map((tool, index) => (
+              <motion.div
+                key={tool.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Link href={tool.href}>
+                  <div className={`group bg-gradient-to-br ${tool.color}/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-white/20 hover:scale-105 transition-all duration-300 cursor-pointer h-full`}>
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="text-xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-white group-hover:to-cyan-400 transition-all duration-300">
+                        {tool.title}
+                      </h3>
+                      <span className={`px-3 py-1 text-xs rounded-full font-semibold ${
+                        tool.status === 'New' ? 'bg-purple-600 text-white' :
+                        tool.status === 'Beta' ? 'bg-orange-600 text-white' :
+                        'bg-green-600 text-white'
+                      }`}>
+                        {tool.status}
+                      </span>
+                    </div>
+                    
+                    <p className="text-gray-300 leading-relaxed mb-4">
+                      {tool.description}
+                    </p>
+                    
+                    <div className="space-y-2 mb-4">
+                      {tool.features.map((feature) => (
+                        <div key={feature} className="flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full" />
+                          <span className="text-sm text-gray-400">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className={`inline-flex items-center gap-2 text-sm font-semibold bg-gradient-to-r ${tool.color} bg-clip-text text-transparent`}>
+                      Launch Tool →
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </div>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <a
-              href="https://discord.gg/nemurium"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-indigo-600 text-white rounded-xl p-6 text-center hover:bg-indigo-700 transition-colors"
-            >
-              <div className="text-3xl mb-4">💬</div>
-              <h3 className="text-lg font-semibold mb-2">Discord Community</h3>
-              <p className="text-indigo-100 text-sm">Chat with creators and get real-time help</p>
-            </a>
-            
-            <a
-              href="/help"
-              className="bg-green-600 text-white rounded-xl p-6 text-center hover:bg-green-700 transition-colors"
-            >
-              <div className="text-3xl mb-4">📚</div>
-              <h3 className="text-lg font-semibold mb-2">Help Center</h3>
-              <p className="text-green-100 text-sm">Tutorials, guides, and documentation</p>
-            </a>
-            
-            <a
-              href="/support"
-              className="bg-purple-600 text-white rounded-xl p-6 text-center hover:bg-purple-700 transition-colors"
-            >
-              <div className="text-3xl mb-4">🎯</div>
-              <h3 className="text-lg font-semibold mb-2">Direct Support</h3>
-              <p className="text-purple-100 text-sm">Get personalized help from our team</p>
-            </a>
-          </div>
-        </section>
+
+          {/* Coming Soon Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-20 text-center"
+          >
+            <h2 className="text-3xl font-bold text-white mb-8">🚀 Coming Soon</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { title: "🧪 Physics Engine", desc: "Advanced physics simulation" },
+                { title: "🌐 Multi-user Sync", desc: "Real-time collaboration" },
+                { title: "📱 Mobile Studio", desc: "Create on any device" }
+              ].map((item) => (
+                <div key={item.title} className="bg-gray-800/30 rounded-xl p-6 border border-gray-700">
+                  <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
+                  <p className="text-gray-400">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
-  );
+  )
 }

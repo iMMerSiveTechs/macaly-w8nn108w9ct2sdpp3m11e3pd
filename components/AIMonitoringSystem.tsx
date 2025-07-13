@@ -604,6 +604,7 @@ export default function AIMonitoringSystem() {
   const [threats, setThreats] = useState<SecurityThreat[]>([]);
   const [recommendations, setRecommendations] = useState<AIRecommendation[]>([]);
   const [isVisible, setIsVisible] = useState(false);
+  const [isScanning, setIsScanning] = useState(false);
 
   useEffect(() => {
     const updateData = () => {
@@ -759,13 +760,21 @@ export default function AIMonitoringSystem() {
             </div>
           )}
 
-          {/* Actions */}
+          {/* Actions with enhanced button styling */}
           <div className="flex gap-2">
             <button
               onClick={handleForceScan}
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded text-xs transition-colors"
+              disabled={isScanning}
+              className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 text-white py-2 px-3 rounded text-xs transition-all duration-300 font-semibold shadow-lg hover:shadow-red-500/25 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed"
             >
-              Force Scan
+              {isScanning ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-3 h-3 border border-white/20 border-t-white rounded-full animate-spin"></div>
+                  Scanning...
+                </span>
+              ) : (
+                'Force Scan'
+              )}
             </button>
           </div>
 

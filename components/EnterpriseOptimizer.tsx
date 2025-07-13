@@ -608,6 +608,7 @@ export default function EnterpriseOptimizationEngine() {
   const [metrics, setMetrics] = useState<OptimizationMetrics | null>(null);
   const [systemHealth, setSystemHealth] = useState<SystemHealth | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isOptimizing, setIsOptimizing] = useState(false);
 
   useEffect(() => {
     const updateMetrics = () => {
@@ -742,13 +743,21 @@ export default function EnterpriseOptimizationEngine() {
             </div>
           )}
 
-          {/* Actions */}
+          {/* Actions with improved button styling */}
           <div className="mt-4 flex gap-2">
             <button
               onClick={handleForceOptimization}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded text-xs transition-colors"
+              disabled={isOptimizing}
+              className="flex-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white py-2 px-3 rounded text-xs transition-colors font-semibold shadow-lg hover:shadow-green-500/25 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed"
             >
-              Force Optimize
+              {isOptimizing ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-3 h-3 border border-white/20 border-t-white rounded-full animate-spin"></div>
+                  Optimizing...
+                </span>
+              ) : (
+                'Force Optimize'
+              )}
             </button>
           </div>
 

@@ -164,7 +164,8 @@ export default function AffiliateEarningsHub() {
 
   const requestPayout = () => {
     // This would integrate with Stripe or PayPal
-    alert('Payout request submitted! You\'ll receive payment within 5-7 business days.');
+    alert('Payout request submitted! You will receive payment within 3-5 business days.');
+    setPendingPayout(0);
   };
 
   return (
@@ -220,8 +221,12 @@ export default function AffiliateEarningsHub() {
             </div>
             <p className="text-2xl font-bold text-yellow-400">${stats.pendingPayouts.toFixed(2)}</p>
             <button 
-              onClick={requestPayout}
-              className="text-xs bg-yellow-600 hover:bg-yellow-700 px-2 py-1 rounded mt-1 transition-colors"
+              onClick={() => {
+                alert('Payout request submitted! You will receive payment within 3-5 business days.');
+                setPendingPayout(0);
+              }}
+              disabled={pendingPayout <= 0}
+              className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed shadow-lg hover:shadow-green-500/25"
             >
               Request Payout
             </button>
@@ -268,12 +273,19 @@ export default function AffiliateEarningsHub() {
               <option value="/marketplace">Marketplace</option>
               <option value="/">Homepage</option>
             </select>
-            <button
-              onClick={generateNewLink}
-              disabled={!newLinkName.trim()}
-              className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 px-6 py-2 rounded-lg transition-colors"
+            <button 
+              onClick={handleGenerateLink}
+              disabled={!selectedPage}
+              className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-600 disabled:to-gray-700 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 disabled:transform-none disabled:cursor-not-allowed shadow-lg hover:shadow-blue-500/25"
             >
-              Generate Link
+              {isGenerating ? (
+                <span className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                  Generating...
+                </span>
+              ) : (
+                'Generate Link'
+              )}
             </button>
           </div>
         </div>
